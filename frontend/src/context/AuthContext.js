@@ -107,9 +107,9 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (formData) => {
     try {
-      console.log('Attempting login with:', formData);
+      console.log('Attempting login with email:', formData.email);
       const res = await axios.post(`${API_BASE_URL}/api/users/login`, formData);
-      console.log('Login response:', res.data);
+      console.log('Login successful');
       
       // Set token in localStorage and axios headers first
       localStorage.setItem('token', res.data.token);

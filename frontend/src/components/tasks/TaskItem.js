@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { TaskContext } from '../../context/TaskContext';
 import {
   ListItem,
@@ -8,9 +8,10 @@ import {
   Checkbox,
   Typography,
 } from '@mui/material';
-import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
+import { Delete as DeleteIcon, Edit as EditIcon, Fullscreen as FullscreenIcon } from '@mui/icons-material';
 
 const TaskItem = ({ task }) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const { deleteTask, setCurrent, updateTask } = useContext(TaskContext);
   const { _id, title, description, completed } = task;
 
@@ -80,23 +81,34 @@ const TaskItem = ({ task }) => {
               style={{
                 textDecoration: completed ? 'line-through' : 'none',
                 color: completed ? 'text.disabled' : 'text.secondary',
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
+                display: showFullDescription ? 'block' : '-webkit-box',
+                WebkitLineClamp: showFullDescription ? 'unset' : 2,
                 WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
+                overflow: showFullDescription ? 'visible' : 'hidden',
+                textOverflow: showFullDescription ? 'clip' : 'ellipsis',
                 maxWidth: '90%',
                 wordBreak: 'break-word',
+                maxHeight: showFullDescription ? 'none' : '2.8em',
+                transition: 'max-height 0.3s ease',
               }}
             >
-              {truncateDescription(description)}
+              {showFullDescription ? description : truncateDescription(description)}
             </Typography>
           )
         }
-        sx={{ mr: 6 }} // Add margin to prevent text from overlapping with buttons
+        sx={{ mr: 10 }} // Increased margin to create more space between text and buttons
       />
-      <ListItemSecondaryAction sx={{ display: 'flex', alignItems: 'center', top: '50%', transform: 'translateY(-50%)' }}>
-        <IconButton aria-label="edit" onClick={onEdit} color="primary" size="medium">
+      <ListItemSecondaryAction sx={{ display: 'flex', alignItems: 'center', top: '50%', transform: 'translateY(-50%)', right: '16px' }}>
+        <IconButton 
+          aria-label="expand" 
+          onClick={() => setShowFullDescription(!showFullDescription)} 
+          color="info" 
+          size="medium" 
+          title="View full description"
+        >
+          <FullscreenIcon />
+        </IconButton>
+        <IconButton aria-label="edit" onClick={onEdit} color="primary" size="medium" sx={{ ml: 1 }}>
           <EditIcon />
         </IconButton>
         <IconButton aria-label="delete" onClick={onDelete} color="error" size="medium" sx={{ ml: 1 }}>
