@@ -15,6 +15,10 @@ A full-stack web application for managing todo tasks with user authentication.
 - MongoDB with Mongoose for data modeling
 - JWT for authentication
 
+### Testing
+- Jest for unit testing
+- Axios for API testing
+
 ## Project Structure
 
 ```
@@ -86,9 +90,67 @@ digital_factory/
 
 ## API Endpoints
 
-- **POST /api/register**: Register a new user
-- **POST /api/login**: Authenticate a user
+- **POST /api/users/register**: Register a new user
+- **POST /api/users/login**: Authenticate a user
+- **GET /api/users/profile**: Get authenticated user's profile
 - **GET /api/tasks**: Get all tasks for the authenticated user
 - **POST /api/tasks**: Create a new task
 - **PUT /api/tasks/:id**: Update an existing task
 - **DELETE /api/tasks/:id**: Delete a task
+
+## Deployment
+
+### Backend Deployment (Render)
+
+1. Sign in to [Render](https://render.com/)
+2. Create a new Web Service
+3. Connect your GitHub repository
+4. Configure the service:
+   - **Name**: todo-app-backend (or your preferred name)
+   - **Runtime**: Node
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Environment Variables**: Add the same variables from your `.env` file
+5. Click 'Create Web Service'
+
+### Frontend Deployment (Render)
+
+1. Sign in to [Render](https://render.com/)
+2. Create a new Static Site
+3. Connect your GitHub repository
+4. Configure the service:
+   - **Name**: todo-app-frontend (or your preferred name)
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `build`
+   - **Environment Variables**: Add `REACT_APP_API_URL` pointing to your backend URL
+5. Click 'Create Static Site'
+
+Frontend Deployment Link: [https://todo-app-frontend.onrender.com](https://todo-app-frontend.onrender.com)
+
+## Unit Testing
+
+### Backend API Tests
+
+The application uses Jest for unit testing the API endpoints.
+
+**Test File Location**: `backend/api.test.js`
+
+**Running Tests**:
+
+1. Make sure your backend server is running:
+   ```
+   cd backend
+   npm run dev
+   ```
+
+2. In a separate terminal, run the tests:
+   ```
+   cd backend
+   npm test
+   ```
+
+The tests cover all API endpoints including:
+- User registration (success and failure cases)
+- User login (success and failure cases)
+- User profile retrieval
+- Task creation, retrieval, updating, and deletion
