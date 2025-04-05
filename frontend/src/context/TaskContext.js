@@ -1,5 +1,6 @@
 import { createContext, useReducer } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../utils/apiConfig';
 
 // Create context
 export const TaskContext = createContext();
@@ -80,7 +81,7 @@ export const TaskProvider = ({ children }) => {
   const getTasks = async () => {
     try {
       dispatch({ type: 'SET_LOADING' });
-      const res = await axios.get('http://localhost:5000/api/tasks');
+      const res = await axios.get(`${API_BASE_URL}/api/tasks`);
       dispatch({ type: 'GET_TASKS', payload: res.data });
     } catch (err) {
       dispatch({
@@ -93,7 +94,7 @@ export const TaskProvider = ({ children }) => {
   // Add task
   const addTask = async (task) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/tasks', task);
+      const res = await axios.post(`${API_BASE_URL}/api/tasks`, task);
       dispatch({ type: 'ADD_TASK', payload: res.data });
     } catch (err) {
       dispatch({
@@ -106,7 +107,7 @@ export const TaskProvider = ({ children }) => {
   // Update task
   const updateTask = async (task) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/tasks/${task._id}`, task);
+      const res = await axios.put(`${API_BASE_URL}/api/tasks/${task._id}`, task);
       dispatch({ type: 'UPDATE_TASK', payload: res.data });
     } catch (err) {
       dispatch({
@@ -119,7 +120,7 @@ export const TaskProvider = ({ children }) => {
   // Delete task
   const deleteTask = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/tasks/${id}`);
       dispatch({ type: 'DELETE_TASK', payload: id });
     } catch (err) {
       dispatch({

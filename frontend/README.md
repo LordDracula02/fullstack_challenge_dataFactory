@@ -63,7 +63,24 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 ### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### Deploying to Render
+
+This application is configured to be deployed as a static site on Render.
+
+1. Make sure you have built the application using `npm run build`
+2. Go to [Render Dashboard](https://dashboard.render.com/)
+3. Click on 'New' and select 'Static Site'
+4. Connect your repository or upload your build folder
+5. Configure your static site:
+   - Name: Choose a name for your site (e.g., "todo-list-frontend")
+   - Build Command: `npm install && npm run build`
+   - Publish Directory: `build`
+   - Environment Variables: Add `NODE_ENV=production`
+6. Click 'Create Static Site'
+
+The frontend is configured to connect to the backend at: https://todo-list-backend-z2o4.onrender.com
+
+For Create React App general deployment information: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 ### `npm run build` fails to minify
 

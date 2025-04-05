@@ -1,5 +1,6 @@
 import { createContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../utils/apiConfig';
 
 // Create context
 export const AuthContext = createContext();
@@ -76,7 +77,7 @@ export const AuthProvider = ({ children }) => {
       setAuthToken(token);
       try {
         console.log('Loading user with token:', token);
-        const res = await axios.get('http://localhost:5000/api/users/profile');
+        const res = await axios.get(`${API_BASE_URL}/api/users/profile`);
         console.log('User profile loaded:', res.data);
         dispatch({ type: 'USER_LOADED', payload: res.data });
       } catch (err) {
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }) => {
   // Register user
   const register = async (formData) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/users/register', formData);
+      const res = await axios.post(`${API_BASE_URL}/api/users/register`, formData);
       dispatch({ type: 'REGISTER_SUCCESS', payload: res.data });
       loadUser();
     } catch (err) {
@@ -107,7 +108,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (formData) => {
     try {
       console.log('Attempting login with:', formData);
-      const res = await axios.post('http://localhost:5000/api/users/login', formData);
+      const res = await axios.post(`${API_BASE_URL}/api/users/login`, formData);
       console.log('Login response:', res.data);
       
       // Set token in localStorage and axios headers first
