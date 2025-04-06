@@ -83,11 +83,7 @@ const Login = () => {
         email,
         password,
       });
-      
-      // Set a timeout to reset loading state if login takes too long
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 15000); // 15 seconds timeout as a fallback
+      // Loading state will be reset in the useEffect when authentication completes or fails
     }
   };
 
@@ -153,7 +149,7 @@ const Login = () => {
             </Button>
             {isLoading && (
               <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
-                This may take up to 10 seconds on the first login due to server warm-up
+                Please wait while connecting to the server. The first login may take longer due to server warm-up.
               </Typography>
             )}
             <Box sx={{ textAlign: 'center' }}>
