@@ -125,7 +125,7 @@ digital_factory/
    - **Environment Variables**: Add `REACT_APP_API_URL` pointing to your backend URL
 5. Click 'Create Static Site'
 
-Frontend Deployment Link: [https://todo-app-frontend.onrender.com](https://todo-app-frontend.onrender.com)
+Frontend Deployment Link: [https://todo-list-frontend-deployment.onrender.com](https://todo-list-frontend-deployment.onrender.com)
 
 ## Unit Testing
 
