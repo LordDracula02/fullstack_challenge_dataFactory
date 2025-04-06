@@ -9,11 +9,13 @@ import {
   Box,
   Paper,
   Alert,
+  CircularProgress,
 } from '@mui/material';
 
 const Login = () => {
   const navigate = useNavigate();
   const { login, isAuthenticated, error, clearErrors } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [user, setUser] = useState({
     email: '',
@@ -27,10 +29,12 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      setIsLoading(false);
       navigate('/');
     }
 
     if (error) {
+      setIsLoading(false);
       setAlertError(error);
       setTimeout(() => {
         clearErrors();
@@ -74,10 +78,16 @@ const Login = () => {
     
     if (validateForm()) {
       console.log('Submitting login form with:', { email, password });
+      setIsLoading(true);
       login({
         email,
         password,
       });
+      
+      // Set a timeout to reset loading state if login takes too long
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 15000); // 15 seconds timeout as a fallback
     }
   };
 
@@ -130,9 +140,22 @@ const Login = () => {
               variant="contained"
               color="primary"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isLoading}
             >
-              Sign In
+              {isLoading ? (
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+                  <span>Signing In...</span>
+                </Box>
+              ) : (
+                'Sign In'
+              )}
             </Button>
+            {isLoading && (
+              <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                This may take up to 10 seconds on the first login due to server warm-up
+              </Typography>
+            )}
             <Box sx={{ textAlign: 'center' }}>
               <Link to="/register" style={{ textDecoration: 'none' }}>
                 <Typography variant="body2" color="primary">
