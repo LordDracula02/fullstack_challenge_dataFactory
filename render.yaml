@@ -18,21 +18,16 @@ services:
 
   - type: web
     name: todo-app-frontend
+    runtime: node
     buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: ./frontend/build
+    startCommand: cd frontend && npm start
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 10000
       - key: REACT_APP_API_URL
         fromService:
           name: todo-app-backend
           type: web
           property: url
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: no-cache
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
