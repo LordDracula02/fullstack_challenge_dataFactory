@@ -1,11 +1,37 @@
 services:
   - type: web
+    name: todo-app-backend
+    runtime: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: todo-app-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+
+  - type: web
     name: todo-app-frontend
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/build
     envVars:
       - key: NODE_ENV
         value: production
+      - key: REACT_APP_API_URL
+        fromService:
+          name: todo-app-backend
+          type: web
+          property: url
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
     routes:
       - type: rewrite
         source: /*
